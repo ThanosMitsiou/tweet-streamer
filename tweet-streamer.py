@@ -5,6 +5,7 @@ from utils import get_access
 class TweetListener(StreamListener):
 
     def __init__(self, track, is_async):
+        super(TweetListener, self).__init__()
         self.api = get_access()
         self.stream = Stream(auth=self.api.auth, listener=self)
         self.stream.filter(track=track, is_async=is_async, languages=["en"])
