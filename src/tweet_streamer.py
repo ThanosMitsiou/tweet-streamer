@@ -1,5 +1,5 @@
 from tweepy import StreamListener, Stream
-from utils import get_access
+from src.utils import get_access
 
 
 class TweetListener(StreamListener):
@@ -23,7 +23,7 @@ class TweetListener(StreamListener):
         if hasattr(status, "retweeted_status"):
             try:
                 text = status.retweeted_status.extended_tweet["full_text"]
-            except:
+            except AttributeError:
                 text = status.retweeted_status.text
         else:
             try:
@@ -34,5 +34,6 @@ class TweetListener(StreamListener):
         return text
 
 
-tweet_listener = TweetListener(track=["#btc"], is_async=True)
+# usage
+# tweet_listener = TweetListener(track=["#btc"], is_async=True)
 

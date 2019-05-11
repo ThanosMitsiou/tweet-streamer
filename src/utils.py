@@ -1,10 +1,9 @@
 import yaml
-
 from kafka import KafkaProducer
 from tweepy import OAuthHandler, API
 
 
-def get_credentials(path="tweet_cred.yaml"):
+def get_credentials(path="conf/tweet_cred.yaml"):
     credentials = yaml.safe_load(open(path))
     return credentials
 
