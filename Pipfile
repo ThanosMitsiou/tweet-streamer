@@ -11,6 +11,7 @@ pylint = "*"
 black = "*"
 pyyaml = "*"
 kafka-python = "*"
+dash = "*"
 
 [requires]
 python_version = "3.7"

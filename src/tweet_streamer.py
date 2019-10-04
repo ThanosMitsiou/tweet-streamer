@@ -1,3 +1,4 @@
+from collections import defaultdict, Counter
 from tweepy import StreamListener, Stream
 from src.utils import get_access
 
@@ -9,10 +10,13 @@ class TweetListener(StreamListener):
         self.api = get_access()
         self.stream = Stream(auth=self.api.auth, listener=self)
         self.stream.filter(track=track, is_async=is_async, languages=["en"])
+        self.counts = Counter()
 
     def on_status(self, status):
         # populate kafka
-        print(self.get_full_text(status))
+        text = self.get_full_text(status).lower().split(" ")
+        hashtag = [tag for tag in text if tag.startswith('#')]
+        self.counts += Counter(hashtag)
 
     def on_error(self, error_code):
         if error_code == 420:
@@ -32,8 +36,3 @@ class TweetListener(StreamListener):
                 text = status.text
 
         return text
-
-
-# usage
-# tweet_listener = TweetListener(track=["#btc"], is_async=True)
-
